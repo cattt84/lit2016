@@ -1,1 +1,2 @@
-# lit2016
+LIT 2016: Pythonskripte testen: wie und warum?
+==============================================
