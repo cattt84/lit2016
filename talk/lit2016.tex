@@ -1,0 +1,309 @@
+\documentclass[t, utf8x, 10pt]{beamer}
+\usepackage[ngerman]{babel}
+\usepackage{bera}
+\usepackage{listings}
+\usepackage{url}
+
+\setbeamertemplate{navigation symbols}{}
+
+\hypersetup{%
+  pdftitle={Pythonskripte testen: wie und warum?}
+  ,pdfauthor={Gert-Ludwig Ingold <gert.ingold@physik.uni-augsburg.de>}
+  ,pdfsubject={Linux Infotag 2016, Augsburg, 16.4.2016}
+  ,pdfkeywords={Python, testing, doctests, unittests}
+}
+
+\graphicspath{{./img/}}
+
+\definecolor{c1}{hsb}{0.125, 1, 0.8}
+\definecolor{c2}{hsb}{0.458, 1, 0.6}
+\definecolor{c3}{hsb}{0.791, 1, 0.8}
+
+\lstset{language=Python,
+        basicstyle={\ttfamily},
+        showstringspaces=false,
+        keywordstyle=\color{c2},
+        commentstyle=\color{c3},
+        stringstyle=\color{c1},
+        }
+
+
+\begin{document}
+
+\begin{frame}[fragile]
+ \vspace{1truecm}
+ \begin{center}
+  \structure{\LARGE Pythonskripte testen: wie und warum?}\\[0.3truecm]
+  {\large Gert-Ludwig Ingold}
+
+  \vspace{0.5truecm}
+  \begin{minipage}{0.5\textwidth}
+   \begin{tiny}
+    \begin{lstlisting}[backgroundcolor=\color{black!10}
+                       ,language={}]
+ **********************************************
+ File "example", line 1, in example
+ Failed example:
+     1+1
+ Expected:
+     1
+ Got:
+     2
+ **********************************************
+ 1 items had failures:
+     1 of   1 in example
+ ***Test Failed*** 1 failures.
+    \end{lstlisting}
+   \end{tiny}
+  \end{minipage}
+
+  \vspace{1truecm}
+  \texttt{\normalsize git clone https://github.com/gertingold/lit2016.git}
+ \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Was sind Docstrings?}
+ \lstinputlisting{../examples/example_1a.py}
+
+ \hrulefill
+
+ \structure{in der Python-Shell:}
+ \begin{lstlisting}[language={}]
+ >>> help(welcome)
+
+ Help on function welcome in module __main__:
+
+ welcome(name)
+     be nice and greet somebody
+     name: name of the person
+ \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ein Gruß an Guido van Rossum}
+ \lstinputlisting{../examples/example_1b.py}
+
+ \hrulefill
+ \begin{itemize}
+  \item die Benutzung der Funktion wird dokumentiert
+  \item dabei wird die Syntax der Python-Shell verwendet\\
+	\texttt{{>}{>}{>}} \quad Eingabe-Prompt\\
+	\texttt{...} \quad Fortsetzungszeile
+  \item nach der Ausgabe folgt eine Leerzeile oder der nächste Prompt
+  \item \alert{es lässt sich aber auch die korrekte Funktionsweise testen}
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ein erster Test}
+ Die Funktion sei in der Datei \texttt{example\_1b.py} definiert:
+
+ \begin{lstlisting}[language=bash]
+ $ python -m doctest example_1b.py
+ $ 
+ \end{lstlisting}
+
+ \begin{itemize}
+  \item »keine Neuigkeiten sind gute Neuigkeiten«\\
+	oder:\\
+	erfolgt keine Ausgabe, so wurden alle vorhandenen Tests fehlerfrei
+	ausgeführt, sofern sie nicht unterdrückt wurden
+  \item es wird das Modul \texttt{doctest} aus der Python-Standardbibliothek
+	verwendet\\
+	ausführliche Dokumentation unter:
+	\url{http://docs.python.org/library/doctest.html}
+  \item mit der Option \texttt{-v} wird \texttt{doctest} gesprächiger
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Und noch einmal mit mehr Details}
+	\begin{lstlisting}[language={}]
+ $ python -m doctest -v example_1b.py
+ Trying:
+     welcome('Guido')
+ Expecting:
+     'Hallo Guido!'
+ ok
+ 1 items had no tests:
+     example_1b
+ 1 items passed all tests:
+     1 tests in example_1b.welcome
+ 1 tests in 2 items.
+ 1 passed and 0 failed.
+ Test passed.
+ \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ein erster Fehler \dots}
+ \lstinputlisting{../examples/example_1c.py}
+\end{frame}
+
+
+\begin{frame}[fragile]{\dots und das Ergebnis}
+ \begin{lstlisting}[language={}]
+ $ python -m doctest example_1c.py
+ **********************************************************************
+ File "example_1c.py", line 6, in example_1c.welcome
+ Failed example:
+     welcome('Guido')
+ Expected:
+     'Hello Guido!'
+ Got:
+     'Hallo Guido!'
+ **********************************************************************
+ 1 items had failures:
+    1 of   1 in example_1c.welcome
+ ***Test Failed*** 1 failures.
+ \end{lstlisting}
+
+ \begin{itemize}
+  \item bei Fehlern werden Details auch ohne die Option \texttt{-v} ausgegeben
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Erst die Tests, dann das Programmieren}
+ \begin{center}
+  \begin{Large}
+   \setlength\fboxsep{0.4truecm}	  
+   \fbox{\parbox{0.85\textwidth}{\structure{Test-driven development (TDD):}\\
+                                 Formuliere erst die Tests und entwickle dann das
+                                 Programm bis alle Tests fehlerfrei ausgeführt werden.}
+	}
+  \end{Large}
+ \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Wunschliste als Tests}
+ \lstinputlisting{../examples/example_1d.py}
+\end{frame}
+
+
+\begin{frame}[fragile]{Fehler, die es zu beseitigen gilt}
+ \begin{tiny}
+	 \begin{lstlisting}[language={}]
+ **********************************************************************
+ File "example_1d.py", line 6, in example_1d.welcome
+ Failed example:
+     welcome()
+ Exception raised:
+     Traceback (most recent call last):
+       File "python3.5/doctest.py", line 1320, in __run
+	 compileflags, 1), test.globs)
+       File "<doctest example_1d.welcome[0]>", line 1, in <module>
+         welcome()
+     TypeError: welcome() missing 1 required positional argument: 'name'
+ **********************************************************************
+ File "example_1d.py", line 9, in example_1d.welcome
+ Failed example:
+     welcome(lang='de')
+ Exception raised:
+     Traceback (most recent call last):
+       File "python3.5/doctest.py", line 1320, in __run
+         compileflags, 1), test.globs)
+       File "<doctest example_1d.welcome[1]>", line 1, in <module>
+         welcome(lang='de')
+     TypeError: welcome() got an unexpected keyword argument 'lang'
+ **********************************************************************
+ File "example_1d.py", line 12, in example_1d.welcome
+ Failed example:
+     welcome('Guido')
+ Expected:
+     'Hello Guido!'
+ Got:
+     'Hallo Guido!'
+ **********************************************************************
+ 1 items had failures:
+    3 of   3 in example_1d.welcome
+ ***Test Failed*** 3 failures.
+  \end{lstlisting}
+ \end{tiny}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ausnahmen sind manchmal gewollt}
+ \begin{tiny}
+  \lstinputlisting{../examples/example_1e.py}
+ \end{tiny}
+
+ \begin{itemize}
+  \item eine nicht implementierte Sprache soll zu einem \texttt{ValueError} führen
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Behandlung von Ausnahmen}
+ \begin{itemize}
+  \item Problem: die Ausgabe ist häufig komplex
+ \end{itemize}
+ \begin{footnotesize}
+  \begin{lstlisting}[language={}]
+ Traceback (most recent call last):
+   File "example_1g.py", line 25, in welcome
+     greeting = greetings[lang]
+ KeyError: 'nl'
+
+ During handling of the above exception, another exception occurred:
+
+ Traceback (most recent call last):
+   File "example_1g.py", line 33, in <module>
+     welcome('Guido', 'nl')
+   File "example_1g.py", line 28, in welcome
+     raise ValueError(errmsg)
+ ValueError: unknown language: nl
+  \end{lstlisting}
+ \end{footnotesize}
+ \begin{itemize}
+  \item es genügt aber:
+ \end{itemize}
+ \begin{footnotesize}
+  \begin{lstlisting}
+ """
+ >>> welcome('Guido', 'nl')
+ Traceback (most recent call last):
+ ValueError: unknown language: nl
+ """
+  \end{lstlisting}
+ \end{footnotesize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Direktiven für \texttt{doctest}}
+ \begin{itemize}
+  \item Platzhalter für beliebige Ausgabe
+ \end{itemize}
+ \begin{footnotesize}
+  \begin{lstlisting}
+ """
+ >>> welcome('Guido', 'nl')  # doctest: +ELLIPSIS
+ Traceback (most recent call last):
+ ValueError: ...
+ """
+  \end{lstlisting}
+ \end{footnotesize}
+
+ \begin{itemize}
+  \item der Test soll vorläufig nicht durchgeführt werden
+ \end{itemize}
+ \begin{footnotesize}
+  \begin{lstlisting}
+ """
+ >>> welcome('Guido', 'nl')  # doctest: +SKIP
+ 'Goed dag Guido!'
+ """
+  \end{lstlisting}
+ \end{footnotesize}
+
+ \begin{itemize}
+  \item siehe die Dokumentation für weitere Direktiven:
+	\url{http://docs.python.org/library/doctest.html}
+  \item interessant ist z.B. noch \texttt{+NORMALIZE\_WHITESPACE}
+ \end{itemize}
+\end{frame}
+
+\end{document}
