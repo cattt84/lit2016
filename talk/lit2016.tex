@@ -19,6 +19,8 @@
 \definecolor{c1}{hsb}{0.125, 1, 0.8}
 \definecolor{c2}{hsb}{0.458, 1, 0.6}
 \definecolor{c3}{hsb}{0.791, 1, 0.8}
+\definecolor{pro}{rgb}{0, 0.6, 0}
+\definecolor{contra}{rgb}{0.8, 0, 0}
 
 \lstset{language=Python,
         basicstyle={\ttfamily},
@@ -27,6 +29,9 @@
         commentstyle=\color{c3},
         stringstyle=\color{c1},
         }
+
+\newcommand\pro{\textcolor{pro}{\faicon{smile-o}}}
+\newcommand\contra{\textcolor{contra}{\faicon{frown-o}}}
 
 
 \begin{document}
@@ -62,6 +67,19 @@
   \faicon{github}
   \texttt{\normalsize git clone https://github.com/gertingold/lit2016.git}
  \end{center}
+\end{frame}
+
+
+\begin{frame}[c]{Wer testet seine Programme?}
+ \begin{itemize}
+  \item[\pro]    Programme werden praktisch immer bei der Programmentwicklung
+	         durch Vergleich mit dem erwarteten Verhalten getestet.
+  \item[\contra] Das passiert oft sehr informell und kaum reproduzierbar.
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Einige Überlegungen zum Testen}
 \end{frame}
 
 
@@ -305,6 +323,30 @@
   \item siehe die Dokumentation für weitere Direktiven:
 	\url{http://docs.python.org/library/doctest.html}
   \item interessant ist z.B. noch \texttt{+NORMALIZE\_WHITESPACE}
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Doctests in beliebigem Text}
+ Doctests sind nicht auf die Verwendung Docstrings begrenzt, sondern können in
+ beliebige Textdateien eingebettet und dort getestet werden.
+\end{frame}
+
+
+\begin{frame}[c]{Vor- und Nachteile von Doctests}
+ \begin{itemize}
+  \item[\pro]    leicht zu schreiben
+  \item[\pro]    unterstützt die Dokumentation durch Beschreibung des
+	         Benutzerinterfaces
+  \item[\pro]    lässt sich -- im Gegensatz zum Rest der Dokumentation -- leicht
+	         auf Korrektheit überprüfen
+  \item[\pro]    kann zum Testen von Code in jeder Art von Text verwendet
+                 werden\\[0.5truecm]
+  \item[\contra] nicht gut für aufwändigere Testsuiten geeignet, zumindest nicht
+	         in Docstrings
+  \item[\contra] nicht für alle Testszenarien geeignet, z.B. Tests
+	         von numerischen Codes bei denen das Ergebnis typischerweise
+		 nur näherungsweise korrekt ist
  \end{itemize}
 \end{frame}
 
