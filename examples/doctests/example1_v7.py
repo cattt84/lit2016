@@ -13,16 +13,12 @@ def welcome(name='', lang='en'):
     >>> welcome('Guido')
     'Hello Guido!'
 
-    >>> welcome('Guido', 'nl')
-    Traceback (most recent call last):
-    ValueError: unknown language: nl
-
     >>> welcome('Guido', 'nl')  # doctest: +ELLIPSIS
     Traceback (most recent call last):
     ValueError: ...
 
     >>> welcome('Guido', 'nl')  # doctest: +SKIP
-    'Goed dag Guido!'
+    'Goedendag Guido!'
 
     """
     greetings = {'de': 'Hallo',

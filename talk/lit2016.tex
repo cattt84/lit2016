@@ -84,7 +84,7 @@
 
 
 \begin{frame}[fragile]{Was sind Docstrings?}
- \lstinputlisting{../examples/doctests/example_1a.py}
+ \lstinputlisting{../examples/doctests/example1_v1.py}
 
  \hrulefill
 
@@ -102,7 +102,7 @@
 
 
 \begin{frame}{Ein Gruß an Guido van Rossum}
- \lstinputlisting{../examples/doctests/example_1b.py}
+ \lstinputlisting{../examples/doctests/example1_v2.py}
 
  \hrulefill
  \begin{itemize}
@@ -117,10 +117,10 @@
 
 
 \begin{frame}[fragile]{Ein erster Test}
- Die Funktion sei in der Datei \texttt{example\_1b.py} definiert:
+ Die Funktion sei in der Datei \texttt{example1\_v2.py} definiert:
 
  \begin{lstlisting}[language=bash]
- $ python -m doctest example_1b.py
+ $ python -m doctest example1_v2.py
  $ 
  \end{lstlisting}
 
@@ -140,16 +140,16 @@
 
 \begin{frame}[fragile]{Und noch einmal mit mehr Details}
 	\begin{lstlisting}[language={}]
- $ python -m doctest -v example_1b.py
+ $ python -m doctest -v example1_v2.py
  Trying:
      welcome('Guido')
  Expecting:
      'Hallo Guido!'
  ok
  1 items had no tests:
-     example_1b
+     example1_v2
  1 items passed all tests:
-     1 tests in example_1b.welcome
+     1 tests in example1_v2.welcome
  1 tests in 2 items.
  1 passed and 0 failed.
  Test passed.
@@ -158,15 +158,15 @@
 
 
 \begin{frame}{Ein erster Fehler \dots}
- \lstinputlisting{../examples/doctests/example_1c.py}
+ \lstinputlisting{../examples/doctests/example1_v3.py}
 \end{frame}
 
 
 \begin{frame}[fragile]{\dots und das Ergebnis}
  \begin{lstlisting}[language={}]
- $ python -m doctest example_1c.py
+ $ python -m doctest example1_v3.py
  **********************************************************************
- File "example_1c.py", line 6, in example_1c.welcome
+ File "example1_v3.py", line 6, in example1_v3.welcome
  Failed example:
      welcome('Guido')
  Expected:
@@ -175,7 +175,7 @@
      'Hallo Guido!'
  **********************************************************************
  1 items had failures:
-    1 of   1 in example_1c.welcome
+    1 of   1 in example1_v3.welcome
  ***Test Failed*** 1 failures.
  \end{lstlisting}
 
@@ -199,7 +199,7 @@
 
 
 \begin{frame}{Wunschliste als Tests}
- \lstinputlisting{../examples/doctests/example_1d.py}
+ \lstinputlisting{../examples/doctests/example1_v4.py}
 \end{frame}
 
 
@@ -207,29 +207,29 @@
  \begin{tiny}
 	 \begin{lstlisting}[language={}]
  **********************************************************************
- File "example_1d.py", line 6, in example_1d.welcome
+ File "example1_v4.py", line 6, in example1_v4.welcome
  Failed example:
      welcome()
  Exception raised:
      Traceback (most recent call last):
        File "python3.5/doctest.py", line 1320, in __run
 	 compileflags, 1), test.globs)
-       File "<doctest example_1d.welcome[0]>", line 1, in <module>
+       File "<doctest example1_v4.welcome[0]>", line 1, in <module>
          welcome()
      TypeError: welcome() missing 1 required positional argument: 'name'
  **********************************************************************
- File "example_1d.py", line 9, in example_1d.welcome
+ File "example1_v4.py", line 9, in example1_v4.welcome
  Failed example:
      welcome(lang='de')
  Exception raised:
      Traceback (most recent call last):
        File "python3.5/doctest.py", line 1320, in __run
          compileflags, 1), test.globs)
-       File "<doctest example_1d.welcome[1]>", line 1, in <module>
+       File "<doctest example1_v4.welcome[1]>", line 1, in <module>
          welcome(lang='de')
      TypeError: welcome() got an unexpected keyword argument 'lang'
  **********************************************************************
- File "example_1d.py", line 12, in example_1d.welcome
+ File "example1_v4.py", line 12, in example1_v4.welcome
  Failed example:
      welcome('Guido')
  Expected:
@@ -238,7 +238,7 @@
      'Hallo Guido!'
  **********************************************************************
  1 items had failures:
-    3 of   3 in example_1d.welcome
+    3 of   3 in example1_v4.welcome
  ***Test Failed*** 3 failures.
   \end{lstlisting}
  \end{tiny}
@@ -247,7 +247,7 @@
 
 \begin{frame}{Ausnahmen sind manchmal gewollt}
  \begin{tiny}
-  \lstinputlisting{../examples/doctests/example_1e.py}
+  \lstinputlisting{../examples/doctests/example1_v5.py}
  \end{tiny}
 
  \begin{itemize}
@@ -263,31 +263,25 @@
  \begin{footnotesize}
   \begin{lstlisting}[language={}]
  Traceback (most recent call last):
-   File "example_1g.py", line 25, in welcome
+   File "example1_v6.py", line 25, in welcome
      greeting = greetings[lang]
  KeyError: 'nl'
 
  During handling of the above exception, another exception occurred:
 
  Traceback (most recent call last):
-   File "example_1g.py", line 33, in <module>
+   File "example1_v6.py", line 33, in <module>
      welcome('Guido', 'nl')
-   File "example_1g.py", line 28, in welcome
+   File "example1_v6.py", line 28, in welcome
      raise ValueError(errmsg)
  ValueError: unknown language: nl
   \end{lstlisting}
  \end{footnotesize}
  \begin{itemize}
-  \item es genügt aber:
+  \item als Doctest genügt aber:
  \end{itemize}
  \begin{footnotesize}
-  \begin{lstlisting}
- """
- >>> welcome('Guido', 'nl')
- Traceback (most recent call last):
- ValueError: unknown language: nl
- """
-  \end{lstlisting}
+ \lstinputlisting[linerange=16-18]{../examples/doctests/example1_v6.py}
  \end{footnotesize}
 \end{frame}
 
@@ -297,25 +291,14 @@
   \item Platzhalter für beliebige Ausgabe
  \end{itemize}
  \begin{footnotesize}
-  \begin{lstlisting}
- """
- >>> welcome('Guido', 'nl')  # doctest: +ELLIPSIS
- Traceback (most recent call last):
- ValueError: ...
- """
-  \end{lstlisting}
+  \lstinputlisting[linerange=16-18]{../examples/doctests/example1_v7.py}
  \end{footnotesize}
 
  \begin{itemize}
   \item der Test soll vorläufig nicht durchgeführt werden
  \end{itemize}
  \begin{footnotesize}
-  \begin{lstlisting}
- """
- >>> welcome('Guido', 'nl')  # doctest: +SKIP
- 'Goedendag Guido!'
- """
-  \end{lstlisting}
+  \lstinputlisting[linerange=20-21]{../examples/doctests/example1_v7.py}
  \end{footnotesize}
 
  \begin{itemize}
