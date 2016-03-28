@@ -101,7 +101,7 @@
 \end{frame}
 
 
-\begin{frame}[fragile]{Ein Gruß an Guido van Rossum}
+\begin{frame}{Ein Gruß an Guido van Rossum}
  \lstinputlisting{../examples/doctests/example_1b.py}
 
  \hrulefill
@@ -157,7 +157,7 @@
 \end{frame}
 
 
-\begin{frame}[fragile]{Ein erster Fehler \dots}
+\begin{frame}{Ein erster Fehler \dots}
  \lstinputlisting{../examples/doctests/example_1c.py}
 \end{frame}
 
@@ -198,7 +198,7 @@
 \end{frame}
 
 
-\begin{frame}[fragile]{Wunschliste als Tests}
+\begin{frame}{Wunschliste als Tests}
  \lstinputlisting{../examples/doctests/example_1d.py}
 \end{frame}
 
@@ -245,7 +245,7 @@
 \end{frame}
 
 
-\begin{frame}[fragile]{Ausnahmen sind manchmal gewollt}
+\begin{frame}{Ausnahmen sind manchmal gewollt}
  \begin{tiny}
   \lstinputlisting{../examples/doctests/example_1e.py}
  \end{tiny}
@@ -289,7 +289,6 @@
  """
   \end{lstlisting}
  \end{footnotesize}
-
 \end{frame}
 
 
@@ -348,6 +347,277 @@
 	         von numerischen Codes bei denen das Ergebnis typischerweise
 		 nur näherungsweise korrekt ist
  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Pascalsches Dreieck}
+ \begin{small}
+  \lstinputlisting{../examples/unittests/pascal_v1.py}
+
+  \begin{lstlisting}[language={}]
+ $ python pascal_v1.py 
+ 0             1           
+ 1           1  1          
+ 2          1  2  1        
+ 3        1  3  3  1       
+ 4       1  4  6  4  1     
+ 5     1  5 10 10  5  1    
+ 6    1  6 15 20 15  6  1 
+  \end{lstlisting}
+ \end{small}
+\end{frame}
+
+
+\begin{frame}[fragile]{Erste Unittests}
+ \texttt{test\_pascal\_v1.py:}
+ \begin{scriptsize}
+  \lstinputlisting{../examples/unittests/test_pascal_v1.py}
+
+  \hrulefill
+
+  \begin{lstlisting}[language={}]
+ $ python test_pascal_v1.py 
+ ...
+ ----------------------------------------------------------------------
+ Ran 3 tests in 0.000s
+ 
+ OK
+  \end{lstlisting}
+ \end{scriptsize}
+ \begin{itemize}
+	 \item die Namen von Test-Methoden müssen mit \texttt{test} beginnen
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Ein Fehler ...}
+ \texttt{test\_pascal\_v2.py:}
+ \begin{small}
+  \lstinputlisting{../examples/unittests/test_pascal_v2.py}
+ \end{small}
+ \begin{itemize}
+  \item Der Fehler wurde hier in den Test eingebaut, er könnte aber genauso
+        gut im Programm stecken.
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{... und das Ergebnis}
+ \begin{scriptsize}
+  \begin{lstlisting}[language={}]
+ $ python test_pascal_v2.py
+ ..F
+ ======================================================================
+ FAIL: test_n5 (__main__.TestExplicit)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File "test_pascal_v2.py", line 12, in test_n5
+     self.assertEqual(list(pascal(5)), [1, 4, 6, 4, 1])
+ AssertionError: Lists differ: [1, 5, 10, 10, 5, 1] != [1, 4, 6, 4, 1]
+
+ First differing element 1:
+ 5
+ 4
+
+ First list contains 1 additional elements.
+ First extra element 5:
+ 1
+
+ - [1, 5, 10, 10, 5, 1]
+ + [1, 4, 6, 4, 1]
+
+ ----------------------------------------------------------------------
+ Ran 3 tests in 0.001s
+
+ FAILED (failures=1)
+  \end{lstlisting}
+ \end{scriptsize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ein erwarteter Fehler}
+ Auszug aus \texttt{test\_pascal\_v3.py:}
+ \begin{small}
+ \lstinputlisting[linerange=1-1]{../examples/unittests/test_pascal_v3.py}
+ [...]
+ \lstinputlisting[linerange=4-4]{../examples/unittests/test_pascal_v3.py}
+ [...]
+ \lstinputlisting[linerange=11-13]{../examples/unittests/test_pascal_v3.py}
+
+ \hrulefill
+
+  \begin{lstlisting}[language={}]
+ $ python test_pascal_v3.py
+ ..x
+ ------------------------------------------------------------------
+ Ran 3 tests in 0.001s
+
+ OK (expected failures=1)
+  \end{lstlisting}
+ \end{small}
+\end{frame}
+
+
+\begin{frame}{Was tun bei größeren Argumenten?}
+bei großen Argumenten ist es nicht mehr sinnvoll, gegen das explizite Resultat
+zu testen $\rightarrow$ andersartige Tests sind erforderlich
+
+\vspace{\baselineskip}
+binomische Formeln:
+\begin{displaymath}
+ \begin{aligned}
+  (a+b)^2 &= 1\cdot a^2+2\cdot ab+1\cdot b^2\\
+  (a-b)^2 &= 1\cdot a^2-2\cdot ab+1\cdot b^2
+ \end{aligned}
+\end{displaymath}
+Die Koeffizienten sind die Einträge bzw. die Einträge mit alternierendem Vorzeichen
+aus dem pascalschen Dreieck für $n=2$.
+
+\vspace{\baselineskip}
+Für $a=b=1$:
+\begin{displaymath}
+ \begin{aligned}
+  1+2+1 &= 2^2\hspace{0.2truecm} \text{allgemein:}\ 2^n \\
+  1-2+1 &= 0\hspace{0.35truecm}    \text{gilt für alle $n$} \\
+ \end{aligned}
+\end{displaymath}
+
+\vspace{1\baselineskip}
+weitere Möglichkeit:
+
+Überprüfe, ob sich aufeinanderfolgende Zeilen des pascalschen Dreiecks durch
+Addition von benachbarten Elementen erzeugen lassen.
+\end{frame}
+
+
+\begin{frame}{Implementation der Tests (I)}
+ \begin{small}
+  [...]
+  \lstinputlisting[linerange=15-22]{../examples/unittests/test_pascal_v4.py}
+  [...]
+  \lstinputlisting[linerange=33-37]{../examples/unittests/test_pascal_v4.py}
+  [...]
+ \end{small}
+\end{frame}
+
+
+\begin{frame}{Implementation der Tests (II)}
+ \begin{small}
+  \lstinputlisting[linerange=1-1]{../examples/unittests/test_pascal_v4.py}
+  [...]
+  \lstinputlisting[linerange=24-31]{../examples/unittests/test_pascal_v4.py}
+  [...]
+  \lstinputlisting[linerange=38-40]{../examples/unittests/test_pascal_v4.py}
+  [...]
+ \end{small}
+\end{frame}
+
+
+\begin{frame}{Testen auf Ausnahmen}
+ Auszug aus \texttt{pascal\_v2.py}:
+ \begin{footnotesize}
+  \lstinputlisting[linerange=1-5]{../examples/unittests/pascal_v2.py}
+ \end{footnotesize}
+ [...]
+
+ \begin{itemize}
+  \item Allerdings wird mit der Ausführung des Codes erst begonnen, wenn
+	ein Rückgabewert benötigt wird. Dazu definieren wir uns eine
+	Funktion \texttt{pascal\_1st\_elem}.
+ \end{itemize}
+
+ \begin{footnotesize}
+  \lstinputlisting[linerange=33-36]{../examples/unittests/test_pascal_v5.py}
+ \end{footnotesize}
+
+ Argumente von \texttt{assertRaises}:
+ \begin{enumerate}
+  \item Ausnahme
+  \item ausführbares Objekt (Funktion, Methode)
+  \item Argumente, die an das ausführbare Objekt übergeben werden
+ \end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Erweiterung auf Floats}
+ Unsere \texttt{pascal}-Methode kann leicht auf Float-Argumente angepasst werden.
+ 
+ Beispiel:
+ \begin{displaymath}
+  \sqrt[3]{1+x} = 1+\frac{1}{3}x-\frac{1}{9}x^2+\frac{5}{81}x^3+\ldots
+ \end{displaymath}
+
+ \texttt{pascal\_v3.py:}
+ \lstinputlisting{../examples/unittests/pascal_v3.py}
+
+ Wenn $n$ keine nichtnegative ganze Zahl ist, gibt der Generator potentiell unendlich
+ viele Werte zurück.
+\end{frame}
+
+
+\begin{frame}{Testen mit Floats}
+ Auszug aus \texttt{test\_pascal\_v6.py}:
+ \begin{small}
+  \lstinputlisting[linerange=2-3]{../examples/unittests/test_pascal_v6.py}
+  [...]
+  \lstinputlisting[linerange=15-20]{../examples/unittests/test_pascal_v6.py}
+  [...]
+  \lstinputlisting[linerange=43-47]{../examples/unittests/test_pascal_v6.py}
+ \end{small}
+ \begin{itemize}
+  \item unpassende Tests können mit dem \texttt{skip}-Dekorator deaktiviert werden
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Achtung, Rundungsfehler!}
+ \begin{scriptsize}
+  \begin{lstlisting}[language={}]
+ $ python test_pascal_v6.py
+ s...Fsss
+ ======================================================================
+ FAIL: test_one_third (__main__.TestFractional)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File "test_pascal_v6.py", line 20, in test_one_third
+     self.assertEqual(result, expected)
+ AssertionError: Lists differ: [1, 0.3333333333333333, -0.11111111111111112,
+ 0.0617283950617284] != [1, 0.3333333333333333, -0.1111111111111111,
+ 0.06172839506172839]
+
+ First differing element 2:
+ -0.11111111111111112
+ -0.1111111111111111
+
+ - [1, 0.3333333333333333, -0.11111111111111112, 0.0617283950617284]
+ ?                                            -                   ^
+
+ + [1, 0.3333333333333333, -0.1111111111111111, 0.06172839506172839]
+ ?                                                               ^^
+
+
+ ----------------------------------------------------------------------
+ Ran 8 tests in 0.001s
+
+ FAILED (failures=1, skipped=4)
+  \end{lstlisting}
+ \end{scriptsize}
+\end{frame}
+
+
+\begin{frame}{Toleranz bei Floats}
+ \begin{itemize}
+  \item Verwendung von \texttt{math.isclose} (ab Python 3.5)
+  \item \texttt{self.assertAlmostEqual}
+  \item für Listen und NumPy-Arrays: \texttt{numpy.testing.assert\_allclose}\\
+	damit lässt sich auch die Toleranz gut einstellen
+ \end{itemize}
+
+ Auszug aus \texttt{test\_pascal\_v7.py:}
+ \lstinputlisting[linerange=3-3]{../examples/unittests/test_pascal_v7.py}
+ [...]
+ \lstinputlisting[linerange=16-21]{../examples/unittests/test_pascal_v7.py}
+
 \end{frame}
 
 \end{document}
