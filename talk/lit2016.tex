@@ -27,7 +27,7 @@
         showstringspaces=false,
         keywordstyle=\color{c2},
         commentstyle=\color{c3},
-        stringstyle=\color{c1},
+        stringstyle=\color{c1}
         }
 
 \newcommand\pro{\textcolor{pro}{\faicon{smile-o}}}
@@ -309,9 +309,42 @@
 \end{frame}
 
 
-\begin{frame}[c]{Doctests in beliebigem Text}
+\begin{frame}[fragile]{Doctests in beliebigem Text}
  Doctests sind nicht auf die Verwendung Docstrings begrenzt, sondern können in
  beliebige Textdateien eingebettet und dort getestet werden.
+
+ \begin{columns}
+  \begin{column}{0.5\textwidth}
+   \texttt{example2.txt:}
+   \begin{footnotesize}
+    \lstinputlisting[language={}]{../examples/doctests/example2.txt}
+   \end{footnotesize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+   \begin{footnotesize}
+    \begin{lstlisting}[language={}]
+ $ python -m doctest -v example2.txt
+ Trying:
+     x = 1
+ Expecting nothing
+ ok
+ Trying:
+     if x < 0:
+         print('x ist negativ')
+     else:
+         print('x ist nicht negativ')
+ Expecting:
+     x ist nicht negativ
+ ok
+ 1 items passed all tests:
+    2 tests in example2.txt
+ 2 tests in 1 items.
+ 2 passed and 0 failed.
+ Test passed.
+    \end{lstlisting}
+   \end{footnotesize}
+  \end{column}
+ \end{columns}
 \end{frame}
 
 
