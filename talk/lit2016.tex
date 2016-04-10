@@ -76,10 +76,84 @@
 	         durch Vergleich mit dem erwarteten Verhalten getestet.
   \item[\contra] Das passiert oft sehr informell und kaum reproduzierbar.
  \end{itemize}
+
+ \uncover<2>{%
+ erster Bug (1947):
+ \begin{center}
+  \includegraphics[width=0.6\textwidth]{H96566k.jpg}
+ \end{center}}
 \end{frame}
 
 
-\begin{frame}{Einige Überlegungen zum Testen}
+\begin{frame}[fragile]{Einige Überlegungen zum Testen}
+ \begin{itemize}
+  \item Tests dokumentieren überprüfte Funktionalität von Code\\[0.2truecm]
+	  Beispiel: \parbox[t]{0.7\textwidth}{\url{https://hg.python.org/cpython/file/tip/Lib/test/test\_math.py}}
+    \begin{lstlisting}
+    ...
+    def testSqrt(self):
+	self.assertRaises(TypeError, math.sqrt)
+        self.ftest('sqrt(0)', math.sqrt(0), 0)
+        self.ftest('sqrt(1)', math.sqrt(1), 1)
+        self.ftest('sqrt(4)', math.sqrt(4), 2)
+        self.assertEqual(math.sqrt(INF), INF)
+        self.assertRaises(ValueError, math.sqrt, NINF)
+        self.assertTrue(math.isnan(math.sqrt(NAN)))
+    ...
+    \end{lstlisting}
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Einige Überlegungen zum Testen}
+ \begin{itemize}
+  \item Tests dokumentieren überprüfte Funktionalität von Code
+  \item Tests sollten jederzeit erlauben, rasch die Funktionalität des Codes zu überprüfen
+	\begin{itemize}
+         \item vor dem Einchecken ins Versionskontrollsystem
+	 \item beim Refactoring
+	 \item \dots
+	\end{itemize}
+  \item Testsuites sind (praktisch) nie vollständig
+	\begin{itemize}
+	 \item zu jedem gefundenen Fehler einen Test schreiben, damit der Fehler nie
+	       wieder auftreten kann
+	 \item zu jedem neuen Feature Tests schreiben
+         \item ggf. immer wieder Tests ergänzen
+	\end{itemize}
+  \item Tests sollten den Code (nahezu) vollständig ausführen\\
+        siehe \texttt{coverage.py} (\url{coverage.readthedocs.org})
+  \item gut getester Code, z.B. aus der Python Standard Library, muss nicht noch einmal
+        getestet werden
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Unittests}
+ \begin{itemize}
+  \item \structure{Unittest}: \parbox[t]{0.78\textwidth}{Test von elementaren Einheiten
+	  eines Programms, z.B. Funktionen oder Methoden}\\[0.2truecm]
+  \item Unittests erleichtern die Lokalisierung von Fehlern
+  \item Unittests unterstützen eine modularisierte Programmierweise und verbessern
+	damit den Code
+  \item das Zusammenspiel von Komponenten muss separat getestet werden (Integrationstests,
+	Systemtests)
+  \item das \texttt{unittest}-Modul von Python kann auch für Integrationstests verwendet
+	werden
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]
+ \begin{Large}
+  Zwei Module aus der Python Standard Library:
+  \setbeamercovered{transparent=30}
+  \begin{itemize}
+   \item<1-2> \texttt{doctest}
+   \item<1>   \texttt{unittest}
+  \end{itemize}
+  \setbeamercovered{invisible}
+ \end{Large}
 \end{frame}
 
 
@@ -366,6 +440,19 @@
 \end{frame}
 
 
+\begin{frame}[c]
+ \begin{Large}
+  Zwei Module aus der Python Standard Library:
+  \setbeamercovered{transparent=30}
+  \begin{itemize}
+   \item<1> \texttt{doctest}
+   \item<1-2>   \texttt{unittest}
+  \end{itemize}
+  \setbeamercovered{invisible}
+ \end{Large}
+\end{frame}
+
+
 \begin{frame}[fragile]{Pascalsches Dreieck}
  \begin{small}
   \lstinputlisting{../examples/unittests/pascal_v1.py}
@@ -634,6 +721,19 @@ Addition von benachbarten Elementen erzeugen lassen.
  [...]
  \lstinputlisting[linerange=16-21]{../examples/unittests/test_pascal_v7.py}
 
+\end{frame}
+
+
+\begin{frame}{Weitere Themen}
+ \begin{itemize}
+  \item \texttt{unittest}: Methoden \texttt{setUp} und \texttt{tearDown}, um
+	vorbereitenden und abschließenden Code für Tests zu definieren
+  \item \texttt{unittest.mock}: ersetzt benötigte Codeteile indem es eine
+	definierte Funktionalität bereitstellt
+  \item weitere Testwerkzeuge:\\
+	\url{wiki.python.org/moin/PythonTestingToolsTaxonomy}\\
+	z.B. \texttt{nose}, \texttt{coverage}
+ \end{itemize}
 \end{frame}
 
 \end{document}
