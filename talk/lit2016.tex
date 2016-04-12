@@ -618,21 +618,18 @@ Addition von benachbarten Elementen erzeugen lassen.
 
 \begin{frame}{Testen auf Ausnahmen}
  Auszug aus \texttt{pascal\_v2.py}:
- \begin{small}
   \lstinputlisting[linerange=1-5]{../examples/unittests/pascal_v2.py}
- \end{small}
 
+ \vspace{\baselineskip}
  Auszug aus \texttt{test\_pascal\_v5.py}:
- \begin{small}
   \lstinputlisting[linerange=33-36]{../examples/unittests/test_pascal_v5.py}
- \end{small}
 
- Argumente von \texttt{assertRaises}:
- \begin{enumerate}
-  \item Ausnahme
-  \item ausführbares Objekt (Funktion, Methode)
-  \item Argumente, die an das ausführbare Objekt übergeben werden
- \end{enumerate}
+ \begin{itemize}
+  \item \texttt{assertRaises} kann auch außerhalb eines Kontexts benutzt werden,
+	ist dann aber weniger übersichtlich
+  \item der Generator beginnt erst mit der Ausführung des Codes, wenn ein
+	Rückgabewert angefordert wurde
+ \end{itemize}
 \end{frame}
 
 
