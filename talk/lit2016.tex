@@ -618,20 +618,14 @@ Addition von benachbarten Elementen erzeugen lassen.
 
 \begin{frame}{Testen auf Ausnahmen}
  Auszug aus \texttt{pascal\_v2.py}:
- \begin{footnotesize}
+ \begin{small}
   \lstinputlisting[linerange=1-5]{../examples/unittests/pascal_v2.py}
- \end{footnotesize}
- [...]
+ \end{small}
 
- \begin{itemize}
-  \item Allerdings wird mit der Ausführung des Codes erst begonnen, wenn
-	ein Rückgabewert benötigt wird. Dazu definieren wir uns eine
-	Funktion \texttt{pascal\_1st\_elem}.
- \end{itemize}
-
- \begin{footnotesize}
+ Auszug aus \texttt{test\_pascal\_v5.py}:
+ \begin{small}
   \lstinputlisting[linerange=33-36]{../examples/unittests/test_pascal_v5.py}
- \end{footnotesize}
+ \end{small}
 
  Argumente von \texttt{assertRaises}:
  \begin{enumerate}
@@ -724,7 +718,7 @@ Addition von benachbarten Elementen erzeugen lassen.
 \end{frame}
 
 
-\begin{frame}{Weitere Themen}
+\begin{frame}{Weiterführende Themen}
  \begin{itemize}
   \item \texttt{unittest}: Methoden \texttt{setUp} und \texttt{tearDown}, um
 	vorbereitenden und abschließenden Code für Tests zu definieren

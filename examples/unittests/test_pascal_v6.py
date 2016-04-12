@@ -43,8 +43,8 @@ class TestAdjacent(TestCase):
 class TestParameters(TestCase):
     @skip('only for integer version')
     def test_negative_int(self):
-        pascal_1st_elem = lambda x: next(pascal(x)) 
-        self.assertRaises(ValueError, pascal_1st_elem, -1)
+        with self.assertRaises(ValueError):
+            next(pascal(-1))
 
 def alternate(g):
     sign = 1
